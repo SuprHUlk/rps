@@ -1,2 +1,2 @@
 # rps
-Play Rock, Paper, Scissors in console
+Play Rock, Paper, Scissors
