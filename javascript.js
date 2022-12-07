@@ -44,35 +44,76 @@ function playRound(playerSelection,computerSelection) {
     }
 }
 
-function game() {
-    let c=0,k=0;
-    for(let i=0;i<5;i++) {
-        let computerSelection=getComputerChoice();
-        let playerSelection=input();
-        if(playRound(playerSelection,computerSelection).search("win")>=0) {
-            c++;
-        }
-        else if(playRound(playerSelection,computerSelection).search("lose")>=0) {
-            k++;
-        }
-        console.log(playRound(playerSelection,computerSelection));
+function game(playerSelection) {
+    
+    let computerSelection=getComputerChoice();
+    if(playRound(playerSelection,computerSelection).search("win")>=0) {
+         c++;
+    }
+    else if(playRound(playerSelection,computerSelection).search("lose")>=0) {
+        k++;
     } 
-    if(c>k) {
-        console.log("You win!");
+
+    g++;
+    
+    roundWinner.textContent=playRound(playerSelection,computerSelection);
+    roundScore.textContent=c+" - "+k;
+
+    if(g==5) {
+        finalWinner.textContent="FINAL SCORE";
+        if(c>k) {
+            roundWinner.textContent="You win!";
+            roundScore.textContent=c+" - "+k;
+        }
+        else if(c==k) {
+            roundWinner.textContent="Draw!";
+            roundScore.textContent=c+" - "+k;
+        }
+        else {
+            roundWinner.textContent="You lose!";
+            roundScore.textContent=c+" - "+k;
+        }
+        c=0,k=0;
     }
-    else if(c==k) {
-        console.log("Draw!");
-    }
-    else {
-        console.log("You lose!");
+    if(g==6) {
+        g=1;
+        finalWinner.textContent="";
     }
 }
 
-function input() {
-    let playerSelection=prompt("Rock, Paper, Scissors?").toLowerCase();
-    playerSelection=playerSelection.replace(playerSelection.charAt(0), playerSelection.charAt(0).toUpperCase());
-    return playerSelection;
-}
+const result=document.querySelector(".result");
+const roundWinner=document.createElement("p");
+roundWinner.classList.add("#roundWinner");
 
-game();
+const roundScore=document.createElement("p");
+roundScore.classList.add("#roundScore");
+
+const finalWinner=document.createElement("p");
+finalWinner.classList.add("#finalWinner");
+
+result.appendChild(finalWinner);
+result.appendChild(roundWinner);
+result.appendChild(roundScore);
+
+const rock=document.querySelector("#rock");
+rock.addEventListener('click',()=>{
+let playerSelection="Rock";
+game(playerSelection);
+});
+
+const paper=document.querySelector("#paper");
+paper.addEventListener('click',()=>{
+let playerSelection="Paper";
+game(playerSelection);
+});
+
+const scissors=document.querySelector("#scissors");
+scissors.addEventListener('click',()=>{
+let playerSelection="Scissors";
+game(playerSelection);
+});
+
+let c=0,k=0,g=0;
+
+
 
